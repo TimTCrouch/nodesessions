@@ -9,5 +9,7 @@ fs.readFile('users/cool_people/coolFolks.txt', (err, data) => {
     }
 
     //What will this print out? Why?
-    console.log(data);
+    console.log(data.toString());
 });
+
+console.log('After async call');
