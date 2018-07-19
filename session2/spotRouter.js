@@ -1,6 +1,8 @@
 const express = require('express');
+//creating a custom router
 const router = express.Router();
 
+//giving router sub-routes
 router.get('/', (req, res) => {
     res.send('Spot');
 });

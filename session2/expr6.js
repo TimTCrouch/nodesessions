@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
 
 //custom middleware. Can be used for logging, authorization, etc.
 app.use('/', (req, res, next) => {
-    if (req.body.name !== 'Clothor') {
+    if (req.body.name !== 'Clortho') {
         res.send('Not allowed!');
         return;
     }
