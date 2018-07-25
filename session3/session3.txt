@@ -1,0 +1,42 @@
+Node session 3 notes:
+
+sock1.js: Starting off from a basic express setup
+- Remember the parts of a basic express app
+- We require express, create app, set up a static file route, set a GET handler to serve a static file and then listen.
+
+sock2.js: Adding socket.io
+- We have to change how we connect to express. Instead of simply creating app from express and connecting with app, we have to use another way of connecting express using HTTP. This is done so that we can bridge express with socket.io. 
+- We create a basic Socket.io handler to give us a console message when a user connects to the web socket. 
+- Also, it is worth specifically noting that we have to change the way we connect, using our HTTP server at the bottom of the script. I can't even count how many times I have first set up express, and then forgot to change from app to http at the bottom. 
+- If we look at home2.html, we see we have added a socket.io script to the file. However, we don't see this in our code anywhere. This is actually a special route that socket.io makes available and is one of the reasons we need to connect using HTTP, since it allows socket.io a chance to intercept incoming traffic if it is for its route and it will serve its own client library file. 
+- Open run.js and see that connecting to our Socket.io/express server is as simple as just calling this io function that was added by Socket.io. The returned socket will be how we access Socket.io from the client. 
+
+sock3.js: What can we do with socket.io?
+- We create a listener in the node file that will listen for the client
+- In run2.js, we can see that the client calls io to connect to the server and then calls emit() on the resulting socket to send a message to the server. 
+- But what is the point? This is really no better than making an AJAX call. 
+
+sock4.js: Introducing server push
+- We add a variable that will be used to keep track of the number of messages.
+- We are also setting an interval in the handler on the server to send out a server-push response every second. 
+- In run3.js, we set up a handler to display these messages as they come in. 
+
+sock5.js: A simple chat room
+- In sock5.js, we have created a list of names to use. Of course in a real app we would allow users to create their own user. But here we support up to 5 max users. After that the server would break, but this is fine for an example. 
+- We then create an object to hold the user names and their socket IDs. 
+- In the connection handler, we create a new object property with the socket ID as the key and the username as the value. Then we remove that username from the list. 
+- Also, notice that the names array is shared between all users. As I mentioned before, there is no threading going on here. All users exist in the same application, with nothing separating them.
+- In the msg handler, we find the name of the user who just sent a message.
+- We then use broadcast to send the message to everyone except the sender. 
+- Over in run4.js, we have factored out the code to display a message into a new displayMessage function since we will be calling it in two different places. 
+- We changed the button click handler to both send the message to the server and display the message immediately. 
+- We then add a handler to receive chats from the server and display them. 
+
+
+
+        
+
+
+
+
+

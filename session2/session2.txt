@@ -1,0 +1,51 @@
+Node Course Session 2 Notes
+
+expr1.js: Basic expres setup
+ - Mention installing express from npm.
+ - Explain concept of middleware and how it relates to express.
+ - Explain process.env and environment variables.
+
+expr2.js: More advanced routing
+ - Show how adding : to a segment makes it a parameter.
+ - Ordering is important. Notice how the parameterized route is greedy and the /noreach route cannot ever be accessed.
+
+expr3.js: Serving an HTML file
+ - Notice the change from send() to sendFile().
+ - __dirname is a node-defined constant that will always point to the current root.
+ - Open in the browser with DevTools open. Notice that jQuery is getting a 404.
+ 
+expr4.js: Adding express.static middleware
+ - Adding the express.static middleware call to create an /access virtual folder.
+ - Open in the browser with DebTools again. Show that jQuery was found. 
+ - Note that you can have more static middleware lines. In that case they are dependent on ordering. 
+
+expr5.js: Taking data from the browser
+ - Notice the addition of the body-parser package from npm.
+ - We use two different bodyParser statements. The first is for raw JSON while the second is to parse form-encoded values. You often see both being used in an app.
+ - Changing to home2.html, which has a button to make a POST AJAX call back to the server. Notice that we have changed what HTTP verb is being handled here. 
+ - Also show the run.js file which is in /public so it can be statically shared.
+ - Open in the browser and press the button. Show the node console to show req.body being printed out. Also show the Chrome DevTools to show the server's response.
+
+expr6.js: Creating custom middleware
+ - We have already been creating middleware, since every route is middleware. We have also been registering middleware from packages with app.use(). Now we want to create a formal piece of middleware to handle a simple authorization seup. 
+ - We have changed to home3.html which attaches run2.js. 
+ - Show run2.js, which sends two different names depending on which button is pressed. 
+ - Look at the new custom middleware. Middleware is run like a pipeline. If you call next(), the next piece of middleware will run. If you don't want to continue you can use the res object and return out of the pipeline. Our middleware here restricts access to all routes below only to those who give their name as Clortho the Keymaster. 
+
+expr7.js: Express routers
+ - Show the spotRouter file, which we are requiring in. 
+ - In spotRouter, notice that we create an express.Router with a factory method. 
+ - Then we register sub-routes to the custom router and export it. 
+ - Back in expr7.js, we register the required router as a piece of middleware to a parent route of /spot.
+ - Open the browser. Run the routes: /, /spot, /spot/see, /spot/run, /spot/run/run.
+
+expr8.js: Adding a custom 404 page
+ - We can use the ordering-sensitivity of express routes to create a custom 404 route.
+ - At the very bottom of your routes, use the wildcard '*' route to catch everything that ends up at the bottom of your route list. We could even add a piece of custom middleware right above this route to log the incorrect routes people are trying to see if there are any trends to better improve our REST structuring. 
+
+
+
+
+
+
+
