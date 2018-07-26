@@ -32,11 +32,13 @@ sock5.js: A simple chat room
 - We changed the button click handler to both send the message to the server and display the message immediately. 
 - We then add a handler to receive chats from the server and display them. 
 
-
-
-        
-
-
-
+mongo6.js: Intro to MongoDB
+- MongoDB is different from traditional relational databases since it is a "NoSQL" database and does not depend on SQL. Instead it is a "document database" which stores JSON as individual records called "documents".
+- Follow the commands in the file.
+- Show Robo 3T and connect to Mongo.
+- Open the nodesessions collection and display it. See that this looks more like SQL Server or any other RDBMS.
+- Switch to "table mode" to see the RDBMS-like display.
+- Right-click a document and select to "View Document" to see that it is a JSON document.
+- You can probably start to see a lot of potential issues with this kind of setup, and yes, without some kind of a control, a schema-less database can get out of hand pretty quickly. It may also feel like you don't have enough query control. In the next session, I will be bringing in another one of node's killer apps, Mongoose. It lets you enforce a schema on your collections and handles references.
 
 

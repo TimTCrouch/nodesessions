@@ -1,0 +1,53 @@
+//start the MongoDB server with the following command:
+mongod
+
+//open a new terminal tab and use this command to start a CLI Mongo session:
+mongo
+
+//display the database you are working with
+db
+
+//switch to another database or create one:
+use nodesession
+
+//to see available databases:
+show dbs
+
+//you insert data into "collections" which are similar to RDBMS tables:
+db.dogs.insertOne({name: 'Nate'})
+
+//to see what we just inserted:
+db.dogs.find()
+
+//insert a couple more dogs (semicolons are usually optional in MongoDB):
+db.dogs.insertOne({name: 'Hamburger'});
+db.dogs.insertOne({name: 'Panda'});
+
+//now we have 3 dogs:
+db.dogs.find()
+
+//it is important to note that these are schema-less:
+db.dogs.insertOne({name: 'Grumbles', legs: 3})
+
+//we can find a specific dog, so now we will query for Nate:
+db.dogs.find({name: 'Nate'})
+
+//this is Javascript, so we can store the results
+let doggy = db.dogs.find({name: 'Nate'});
+doggy
+
+//find all of the dogs that aren't named Grumbles
+let notGrumbles = db.dogs.find({name: {$ne: 'Grumbles'}});
+
+//you can find more operators here: https://docs.mongodb.com/manual/reference/operator/query/
+
+//now we will update "Hamburger" and change the name to "Pizza"
+db.dogs.updateOne({ name: 'Hamburger' }, { $set: {name: "Pizza" }})
+db.dogs.find()
+
+//time to fix up the schema and give all of the dogs a "legs" property
+db.dogs.updateMany({name: {$ne: 'Grumbles'}}, { $set: {legs: 4}})
+db.dogs.find()
+
+//time to check out Robo 3T! To leave a Mongo terminal session, press Ctrl+C
+
