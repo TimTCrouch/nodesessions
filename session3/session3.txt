@@ -39,6 +39,4 @@ mongo6.js: Intro to MongoDB
 - Open the nodesessions collection and display it. See that this looks more like SQL Server or any other RDBMS.
 - Switch to "table mode" to see the RDBMS-like display.
 - Right-click a document and select to "View Document" to see that it is a JSON document.
-- You can probably start to see a lot of potential issues with this kind of setup, and yes, without some kind of a control, a schema-less database can get out of hand pretty quickly. It may also feel like you don't have enough query control. In the next session, I will be bringing in another one of node's killer apps, Mongoose. It lets you enforce a schema on your collections and handles references.
-
-
+- You can probably start to see a lot of potential issues with this kind of setup, and yes, without some kind of a control, a schema-less database can get out of hand pretty quickly. It may also feel like you don't have enough query control. In the next session, I will be bringing in another one of node's killer apps, Mongoose. It lets you enforce a schema on your collections and handles references. It is one of the reasons why MongoDB is so popular with node developers since it allows you to use MongoDB as a general-purpose database that is really easy to work with.
