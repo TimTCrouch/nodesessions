@@ -1,0 +1,31 @@
+//start the MongoDB server with the following command:
+mongod
+
+//open a new terminal tab and use this command to start a CLI Mongo session:
+mongo
+
+//switch back to the nodesessions database we were using before
+use nodesession
+
+//take a look at the collections in this database
+db.getCollectionNames()
+
+//take a look at our dogs
+db.dogs.find()
+
+//now we will update "Hamburger" and change the name to "Pizza"
+db.dogs.updateOne({ name: 'Hamburger' }, { $set: { name: 'Pizza' }})
+db.dogs.find()
+
+//time to fix up the schema and give all of the dogs a "legs" property
+db.dogs.updateMany({ name: { $ne: 'Grumbles' }}, { $set: { legs: 4 }})
+db.dogs.find()
+
+//the last part we are missing for CRUD operations is delete so :
+db.dogs.insertOne({ name: 'Suspicious', legs: 8 })
+db.dogs.find()
+db.dogs.deleteOne({ legs: { $gt: 4 }})
+db.dogs.find()
+
+//time to check out Robo 3T! To leave a Mongo terminal session, press Ctrl+C
+

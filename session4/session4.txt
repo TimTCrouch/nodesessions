@@ -1,0 +1,69 @@
+Node session 4 notes:
+
+mongo1.txt: Intro to MongoDB
+- Follow the commands in the file.
+- Show Robo 3T and connect to Mongo.
+- Open the nodesessions collection and display it. See that this looks more like SQL Server or any other RDBMS.
+- Switch to "table mode" to see the RDBMS-like display.
+- Right-click a document and select to "View Document" to see that it is a JSON document.
+- You can probably start to see a lot of potential issues with this kind of setup, and yes, without some kind of a control, a schema-less database can get out of hand pretty quickly. It may also feel like you don't have enough query control. This session, I will be bringing in another one of node's killer apps, Mongoose. It lets you enforce a schema on your collections and handles references. It is one of the reasons why MongoDB is so popular with node developers since it allows you to use MongoDB as a general-purpose database that is really easy to work with.
+
+mongoose2.js: Intro to Mongoose
+- First we need to install mongoose through npm. That command is "npm install --save mongoose". This will add it to our package.json file and allow anyone to easily get it again if they download our source code. 
+- Next in the JS file, we need to require in Mongoose. 
+- We also need to bring in our schema file. It is a fairly common practice to capitalize your schema-holding constants. 
+- In dog1.js, we need Mongoose in here as well. Next we create the simple model, Dog. We give it a name (also capitalized by convention) that Mongoose will call this model as well as the schema object for it. Then we export our created model.
+- Back in mongoose2.js, I am creating a function to hold most of this script's logic so we can easily use async/await. There are a few options to get "top-level await", such as the top-level-await package and I believe an experimental node toggle, but I prefer not to use them, particularly in any kind of production server. 
+- The first thing we need to do is await a connection to MongoDB through Mongoose to give it access to our DB. Of course you could factor out this connection string and protect it if your DB is secured since it would contain sensitive information. 
+- We then create an actual instance of our model. In this case, it is a dog named "David".
+- Then we await on saving David to the database. 
+- Switching over to Robo 3T, we can see our new "mongoose" collection was created. Taking a look at that, we see the MongoDB ObjectId which is unique to our document. 
+
+mongoose3.js: Try to add to the schema
+- This time we have almost an identical setup, using the same model and schema. 
+- We try to add on a new property for this dog, Brian: nametag, as a boolean. 
+- It actually executes, but when we flip over to Robo 3T, we see it didn't take our made-up nametag property. 
+
+mongoose4.js: Completely go against the schema
+- For this file we again have almost exactly the same setup using the same model and schema, so Dog has a string name and a number of legs. 
+- Interestingly, Terry the dog saves, but none of our made-up properties are there. But neither are the schema properties. 
+- This seems strange and likely is not behavior you want. What is up with this?
+
+mongoose5.js: Model validation
+- Before it was still saving our instances because we had no validation. We didn't set down what was required to make a dog. 
+- Our main JS file, mongoose5.js is very close to the same except that it is loading dog2.js as the model instead of dog1.js and has also wrapped the save call inside a try/catch block. Being able to use try/catch blocks is a big benefit of using async/await versus the original way which was "error-first" callbacks where an IF statement was always needed to check for errors on every async call. 
+- Opening dog2.js, we can see that the main difference is that we are now assigning an object to our each of our schema properties instead of just the type. This allows us to add validation rules to each property and decide what is required, what is not, how high a number can be, and many other things. 
+- Upon execution, you can see that we get an error this time. 
+
+mongoose6.js: Querying 
+- This time the main JS file has changed a bit because instead of creating a dog we are going to search for one that already exists. 
+- Luckily, Mongoose's query functionality is very similar to MongoDB's, with some added parts for features that aren't natively in Mongo, such as references. 
+- We use the same Dog model that we required in before. 
+- We wrap everything up into a try/catch block again in case of any errors. 
+- First we query for just David with findOne and check to make sure we got him. 
+- Then we use just find to get all dogs with 4 legs, and we get 2. 
+
+mongoose7.js Reference types
+- First we are requiring in a new Dog model file, dog3.js.
+- Opening dog3, we can see that the first difference is that we are creating a new constant for the Mongoose Schema object. This isn't necessary but keeps the ObjectId reference below a little leaner. 
+- Next we have added a new property called "bone". Its type is ObjectId, which you may remember is the unique property that MongoDB gives its documents. Then we have a "ref" property that is given the name that we give our model. We will see the Bone model in a moment. 
+- Back in our mongoose7.js file, we see we are requiring in a new file called bone1.js. 
+- Opening bone1.js, we can see that this is very similar to a run-of-the-mill Mongoose model. One of the main differences is that we use mongoose to set a _id property that is the MongoDB ObjectId type. Naming this property _id is a requirement since this is the name that Mongo gives the ID. It allows you to access the MongoDB ObjectId through this property. 
+- Now we will drop our existing "dogs" collection. There are ways to migrate your collections through schema changes, but it is beyond our current scope. 
+- Back in mongoose7.js, we will create a few dogs using our new Dog schema with the bone property. 
+- First we query for Marko. We do already have him, but that would be a fairly unnatural scenario. Typically you query, check some things and then update so we will find Marko create his bone, give it to Marko and then save Marko. 
+- Notice that we need to give the Bone an _id property.  
+- Check in Robo 3T that the bone was added. 
+
+mongoose8.js Populate reference types
+- So we have a dog saved with a bone. We could query for Marko and then query for the bone ourselves with the ObjectId, but that is cumbersome. Mongoose can do better than that. 
+- The mongoose8.js file is very similar to how we queried before, except for one major change: we have added a populate() method call onto the end of the query. This makes Mongoose fill in the reference for us. 
+- There is a ton more that can be done in Mongoose. You can add square brackets around a property to make it an array, including reference types. You can add many more types of validation, including custom validation. You can set up events to fire on saves, pre-save, post-save and more so you can do specialized setup on each call or add logging or other cross-cutting concerns. 
+- I hope you have gotten something out of this node, express and MongoDB course. As always, all of the files are up on Github at https://github.com/TimTCrouch/nodesessions. I will try to get session 1 and 2 text files filled out and added. The session text files essentially contain everything I am saying so once I have the ones for sessions 1 and 2 you could basically go back through this entire course any time you want and be able to play around with the files which is when you will really get the hang of node. So I definitely encourage you to do that. Even if you don't want to mess with Git or aren't very familiar with it, you can just click the big green "Clone or download" button on the repo to download a zip of it and start playing around. 
+
+
+
+
+
+
+

@@ -27,7 +27,7 @@ socketIo.on('connection', (socket) => {
         const user = users[socket.id];
         console.log(chalk.cyan(`From ${user}: ${data.message}`));
 
-        //send message to all users
+        //send message to all users except the sender
         socket.broadcast.emit('chat', `${user}: ${data.message}`);
     });
 
